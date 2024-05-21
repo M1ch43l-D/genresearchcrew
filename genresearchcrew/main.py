@@ -6,22 +6,17 @@ from tasks import ResearchTasks
 
 load_dotenv()
 
-# Initialize tasks and agents
 tasks = ResearchTasks()
 agents = ResearchAgents()
 
-# Define the topic and information
-topic = "Remote Entry Level Tech Jobs for AI and Cyber Security"
+topic = "Remote Entry Level Tech Jobs for Cyber Security"
 info = "Salary, Required Experience, Application Link, Date Posted, Company Name, Expected Company Size, Job Role, Job Description"
 
-# Initialize agents
 web_researcher = agents.web_researcher()
 data_organizer = agents.data_organizer()
 
-# Create the research task
 web_search = tasks.get_research_task(web_researcher, topic, info)
 
-# Initialize the crew for the research task
 research_crew = Crew(
     agents=[web_researcher],
     tasks=[web_search],
@@ -30,17 +25,13 @@ research_crew = Crew(
     process=Process.sequential
 )
 
-# Kick off the research task
 research_results = research_crew.kickoff()
 
 if research_results:
-    # Extract gathered data from research results
-    gathered_data = research_results['outputs']  # Adjust this based on actual output structure
+    gathered_data = research_results['outputs']
 
-    # Create the data compilation task with the gathered data
     data_entry = tasks.get_data_compilation_task(data_organizer, gathered_data)
 
-    # Initialize the crew for the data entry task
     data_crew = Crew(
         agents=[data_organizer],
         tasks=[data_entry],
@@ -48,10 +39,8 @@ if research_results:
         process=Process.sequential
     )
 
-    # Kick off the data entry task
     entry_results = data_crew.kickoff(inputs={'data': gathered_data})
 
-    # Print the results
     print("\n\n########################")
     print("## Here are the results of the web research and data entry")
     print("########################\n")
