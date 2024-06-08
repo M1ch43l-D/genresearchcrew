@@ -1,8 +1,8 @@
 import os
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-from datetime import datetime
 from dotenv import load_dotenv
+from datetime import datetime
 load_dotenv()
 
 spread_sheets_id = os.getenv('SPREAD_SHEET_ID')
@@ -12,7 +12,6 @@ if not spread_sheets_id:
     raise ValueError("SPREAD_SHEET_ID not set in .env file")
 if not credentials_path:
     raise ValueError("GOOGLE_SHEETS_CREDENTIALS_PATH not set in .env file")
-
 
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 
